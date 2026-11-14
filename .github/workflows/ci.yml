@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: 7K-Group/workflows-library/.github/workflows/ci-docs.yml@6612ebd846a4795d763452be71c8dd9cdb091dab # main 2026-11-14
+    with:
+      path: .
+    permissions:
+      contents: read
+
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: "3.11"
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Validate profile and assets
+        run: python3 scripts/validate_profile.py --root .
+      - name: Validate local Markdown links
+        run: python3 scripts/check_markdown_links.py --root .
+      - name: Validate immutable workflow references
+        run: python3 scripts/validate_workflow_pins.py .github/workflows
+      - name: Check whitespace
+        run: git diff --check
