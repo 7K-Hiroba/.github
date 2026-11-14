@@ -9,7 +9,7 @@
 
   **The community home for Inari extensions, catalog packages, scaffold templates, Helm charts, and observability assets.**
 
-  **Pre-v1 · Active development · Apache-2.0**
+  Pre-v1 · Active development · Apache-2.0
 </div>
 
 ## A community built around applications
