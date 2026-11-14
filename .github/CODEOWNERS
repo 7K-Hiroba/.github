@@ -1,0 +1,8 @@
+* @7K-Hiroba/hiroba-maintainers
+
+/profile/ @7K-Hiroba/hiroba-maintainers @7K-Hiroba/platform-security
+/profile/README.md @7K-Hiroba/hiroba-maintainers @7K-Hiroba/platform-security @7K-Hiroba/legal-reviewers
+/.github/workflows/ @7K-Hiroba/hiroba-maintainers @7K-Hiroba/platform-security
+/SECURITY.md @7K-Hiroba/hiroba-maintainers @7K-Hiroba/platform-security
+/CONTRIBUTING.md @7K-Hiroba/hiroba-maintainers @7K-Hiroba/legal-reviewers
+/PULL_REQUEST_TEMPLATE.md @7K-Hiroba/hiroba-maintainers @7K-Hiroba/legal-reviewers

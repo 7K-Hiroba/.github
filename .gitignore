@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.coverage
+htmlcov/
+.mypy_cache/
+.pytest_cache/
+.DS_Store
+.vscode/
+.idea/
+evidence/
+screenshots/
+*.local.png
+!profile/assets/avatar.png
+!profile/assets/social-preview.png
