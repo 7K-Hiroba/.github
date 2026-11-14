@@ -1,0 +1,46 @@
+name: Feature request
+description: Describe a problem and desired Hiroba outcome
+title: "[Feature]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature requests are not approval to submit external code while contributions are paused. Do not include sensitive or vulnerability information.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user or maintainer problem needs to be solved?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Proposed outcome
+      description: Describe the smallest useful result and any acceptance criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include existing workarounds or reasons not to build this.
+    validations:
+      required: false
+  - type: input
+    id: repository
+    attributes:
+      label: Affected repository or application
+      description: Name the existing repository or planned application identity.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: This request contains no sensitive or vulnerability information.
+          required: true
+        - label: I understand external contributions and external-PR merges remain paused.
+          required: true

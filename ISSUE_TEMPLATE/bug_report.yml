@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a reproducible Hiroba defect without sensitive information
+title: "[Bug]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Security reports must remain private.** Do not include vulnerabilities, secrets, tenant data, personal data, or unredacted logs. Use the security policy's private contact route instead.
+  - type: input
+    id: repository
+    attributes:
+      label: Affected repository
+      description: For example, 7K-Hiroba/community or a published application repository.
+      placeholder: 7K-Hiroba/community
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Release tag, branch, or full commit SHA.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Relevant tool versions and non-secret runtime context.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Minimal steps and sanitized inputs needed to reproduce the behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and redacted logs
+      description: Describe the result and attach only logs confirmed free of sensitive data.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and redacted all sensitive information.
+          required: true
+        - label: This is not a vulnerability report.
+          required: true
