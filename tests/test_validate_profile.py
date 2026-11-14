@@ -1,3 +1,5 @@
+import hashlib
+import re
 import shutil
 import struct
 import subprocess
@@ -72,6 +74,24 @@ class ProfileValidationTests(unittest.TestCase):
                 break
         notice.write_text("\n".join(lines) + "\n", encoding="utf-8")
         self.assert_invalid("output_icon_dark_sha256")
+
+    def test_remote_svg_css_with_synchronized_provenance(self):
+        svg = self.root / "profile" / "assets" / "icon-hiroba.svg"
+        content = svg.read_text(encoding="utf-8").replace(
+            "</svg>",
+            '<style>@import url("https://evil.invalid/payload.css");</style></svg>',
+        )
+        svg.write_text(content, encoding="utf-8")
+        digest = hashlib.sha256(svg.read_bytes()).hexdigest()
+        notice = self.root / "profile" / "assets" / "NOTICE.md"
+        provenance = re.sub(
+            r"(?m)^(- `output_icon_dark_sha256`: `)[0-9a-f]{64}(`)$",
+            rf"\g<1>{digest}\g<2>",
+            notice.read_text(encoding="utf-8"),
+        )
+        self.assertIn(f"- `output_icon_dark_sha256`: `{digest}`", provenance)
+        notice.write_text(provenance, encoding="utf-8")
+        self.assert_invalid("remote CSS")
 
     def test_broken_local_link(self):
         readme = self.root / "README.md"

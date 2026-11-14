@@ -41,6 +41,7 @@ REQUIRED_FILES = [
     ".github/CODEOWNERS",
     "AGENTS.md",
     "renovate.json",
+    "requirements-dev.txt",
     ".markdownlint.json",
     ".gitignore",
 ]
@@ -65,15 +66,19 @@ def validate_svg(path: Path, theme: str):
         return [f"{path}: invalid SVG XML: {error}"]
     for element in root.iter():
         tag = element.tag.rsplit("}", 1)[-1].lower()
-        if tag in {"script", "foreignobject", "image", "iframe", "object", "embed"}:
+        if tag in {"script", "foreignobject", "image", "iframe", "object", "embed", "style", "link"}:
             errors.append(f"{path}: unsafe SVG element {tag}")
         for name, value in element.attrib.items():
             attribute = name.rsplit("}", 1)[-1].lower()
             if attribute.startswith("on"):
                 errors.append(f"{path}: unsafe SVG event handler {attribute}")
+            if attribute == "style":
+                errors.append(f"{path}: unsafe SVG style attribute")
             if attribute in {"href", "src", "xlink:href"} and not value.startswith("#"):
                 errors.append(f"{path}: remote SVG resource is forbidden")
     content = path.read_text(encoding="utf-8")
+    if re.search(r"<\?xml-stylesheet\b|@import\b|url\s*\(", content, re.IGNORECASE):
+        errors.append(f"{path}: remote CSS, imports, and url() resources are forbidden")
     expected = {
         "dark": ["#16A34A", "#15803D", "#FFFFFF"],
         "light": ["#166534", "#14532D", "#000000"],

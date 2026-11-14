@@ -11,6 +11,7 @@ This repository owns the Hiroba organization profile, approved brand assets, and
 Run from the repository root before submitting changes:
 
 ```bash
+python3 -m pip install --require-hashes -r requirements-dev.txt
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/validate_profile.py --root .
 python3 scripts/check_markdown_links.py --root .
